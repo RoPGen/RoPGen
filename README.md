@@ -1,4 +1,4 @@
-### Hi there 👋
+## RoPGen: Towards Robust Code Authorship Attribution via Automatic Coding Style Transformation
 
 <!--
 **RoPGen/RoPGen** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
