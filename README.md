@@ -6,7 +6,7 @@ Zhen Li, Guenevere Chen, Chen Chen, Yayi Zou, Shouhuai Xu. [RoPGen: Towards Robu
 ---
 We leverage 23 coding style attributes and propose two automatic coding style imitation and hiding attacks.
 
-We propose an innovative framework called RoPGen, which learns authors’ coding style patterns that are hard for attackers to manipulate. The key idea is to incorporate data augmentation and gradient augmentation to learn robust coding style patterns. 
+We propose an innovative framework RoPGen, which learns authors’ coding style patterns that are hard for attackers to manipulate. The key idea is to incorporate data augmentation and gradient augmentation to learn robust coding style patterns. 
 
 We use four datasets for evaluation: the first two are used in the literature and the last two are introduced in our work. 
 
