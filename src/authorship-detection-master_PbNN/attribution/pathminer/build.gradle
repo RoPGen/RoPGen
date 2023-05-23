@@ -1,0 +1,48 @@
+buildscript {
+  ext.kotlin_version = '1.4.10'
+  repositories {
+    mavenCentral()
+    maven {
+      url "https://dl.bintray.com/egor-bogomolov/astminer/"
+    }
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath 'com.github.jengelman.gradle.plugins:shadow:5.1.0'
+  }
+}
+
+plugins {
+  id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = 'codestyle.miner.MainKt'
+
+defaultTasks 'run'
+
+repositories {
+  mavenCentral()
+  maven {
+    url "https://dl.bintray.com/egor-bogomolov/astminer/"
+  }
+}
+
+dependencies {
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  // https://mvnrepository.com/artifact/com.github.gumtreediff/core
+  compile group: 'com.github.gumtreediff', name: 'core', version: '2.1.0'
+  // https://mvnrepository.com/artifact/com.github.gumtreediff/client
+  compile group: 'com.github.gumtreediff', name: 'client', version: '2.1.0'
+  // https://mvnrepository.com/artifact/com.github.gumtreediff/gen.jdt
+  compile group: 'com.github.gumtreediff', name: 'gen.jdt', version: '2.1.0'
+  implementation 'com.google.code.gson:gson:2.8.5'
+//  implementation 'io.github.vovak.astminer:astminer:0.6'
+  implementation files('/home/egor/work/astminer/build/shadow/lib-0.6.jar')
+
+  implementation "com.github.ajalt:clikt:2.1.0"
+  testCompile "junit:junit:4.11"
+  testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
