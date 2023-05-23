@@ -1,0 +1,72 @@
+from torch import nn
+import torch
+
+from model.CodeVectorizer import CodeVectorizer
+from model.randwidth_ops import RWLinear,make_divisible
+
+
+class ProjectClassifier(nn.Module):
+
+    def __init__(self, n_tokens, n_paths, dim, n_classes):
+        super(ProjectClassifier, self).__init__()
+        self.vectorization = CodeVectorizer(n_tokens, n_paths, dim)
+        
+        #self.transform = nn.Sequential(nn.Linear(dim, dim), nn.Tanh())
+        #self.classifier = nn.Linear(dim, n_classes)
+        
+        self.transform = nn.Sequential(RWLinear(dim, dim,us=[False, True]), nn.Tanh())
+        self.classifier = RWLinear(dim, n_classes, us=[True, False])
+        
+        # #init_channel = 128
+        # width_mult = 1.0  # upper bound
+        # channels = make_divisible(dim * width_mult)
+        # self.outp = channels
+        # self.classifier = nn.Sequential(
+        #     RWLinear(self.outp, n_classes, us=[True, False])
+        # )
+        
+    def forward(self, contexts):
+        #grad
+        
+        new_dim = int((self.classifier.width_mult*256)+0.5)
+        #vectorized_contexts = self.vectorization(contexts,new_dim)
+         
+        
+        vectorized_contexts_ = self.vectorization(contexts)
+        #print(vectorized_contexts.shape)
+        vectorized_contexts=vectorized_contexts_[:,0:new_dim]
+        ######predictions = self.classifier(self.transform(vectorized_contexts))
+        #print(predictions.shape)
+        #print(vectorized_contexts.shape)
+        predictions = self.classifier(vectorized_contexts)
+        # predictions = predictions.squeeze(-1)
+        return predictions
+    def get_matrix(self,context):
+        return self.vectorization(context)
+    def predictions(self,vectorization_con):
+        return self.classifier(vectorization_con)
+'''
+class ProjectClassifier(nn.Module):
+
+    def __init__(self, n_tokens, n_paths, dim, n_classes):
+        super(ProjectClassifier, self).__init__()
+        self.vectorization = CodeVectorizer(n_tokens, n_paths, dim)
+        
+        self.transform = nn.Sequential(nn.Linear(dim, dim), nn.Tanh())
+        self.classifier = nn.Linear(dim, n_classes)
+        
+        #self.transform = nn.Sequential(RWLinear(dim, dim,us=[True, False]), nn.Tanh())
+        #self.classifier = RWLinear(dim, n_classes, us=[True, False])
+        
+    def forward(self, contexts):
+        vectorized_contexts = self.vectorization(contexts)
+        # predictions = self.classifier(self.transform(vectorized_contexts))
+        predictions = self.classifier(vectorized_contexts)
+        # predictions = predictions.squeeze(-1)
+        return predictions
+    def get_matrix(self,context):
+        return self.vectorization(context)
+    def predictions(self,vectorization_con):
+        return self.classifier(vectorization_con)
+        
+'''

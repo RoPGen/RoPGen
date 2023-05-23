@@ -1,0 +1,14 @@
+batch_size: 128
+classifier_type: nn
+epochs: 10
+hidden_dim: 64
+learning_rate: 0.01
+log_batches: 10
+mode: snapshot
+seed: 239
+test_size: 0.1
+skip_read_write: 0
+final_test: 0
+training_method : GradAug  #GradAug,original
+
+source_folder: /home/zss/data/project5/authorship-detection-master_epoch_nn_gcj5/processed/grad/gcjjava2/train_aug3/cpp/
